@@ -1,0 +1,20 @@
+
+uniform vec2 mouse;
+uniform vec2 resolution;
+uniform vec2 player;
+uniform float mult;
+float div  = 1.56;
+
+void main(void) {	
+        vec2 pM = gl_FragCoord.xy / resolution.xy;
+        vec2 pP = pM;
+        pP.x = -pP.x + player.x / resolution.x;
+        pP.y = -pP.y + player.y / resolution.y;
+        float disP = sqrt(pP.x*pP.x + pP.y*pP.y);
+        pM.x -= mouse.x / resolution.x;
+        pM.y += mouse.y / resolution.y;
+        float disM = sqrt(pM.x*pM.x + pM.y*pM.y);
+        float dis = disM;
+        if (disP < dis) dis = disP;
+        gl_FragColor = vec4(0.0, 0.0, 0.0, (mult*dis)/div);
+}
